@@ -1,0 +1,16 @@
+service: "service:svc"
+include:
+  - "*.py"
+  - "requirements.txt"
+python:
+  packages:
+    - torch==1.12.1+cu116
+    - transformers
+    - diffusers
+    - ftfy
+    - pydantic
+    - scipy
+  extra_index_url:
+    - "https://download.pytorch.org/whl/cu116"
+docker:
+  cuda_version: "11.6"
