@@ -1,4 +1,5 @@
 from contextlib import ExitStack
+import os
 
 import bentoml
 from diffusers import StableDiffusionImg2ImgPipeline
@@ -9,7 +10,10 @@ from torch import autocast
 
 
 model_id = 'CompVis/stable-diffusion-v1-4'
-hf_auth_token = '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'
+hf_auth_token = os.getenv('HUGGING_FACE_HUB_TOKEN', default=False)
+
+print(model_id)
+print(hf_auth_token)
 
 
 class StableDiffusionRunnable(bentoml.Runnable):
@@ -23,7 +27,7 @@ class StableDiffusionRunnable(bentoml.Runnable):
             model_id,
             use_auth_token=hf_auth_token,
             revision="fp16",
-            torch_dtype=torch.float16,
+            torch_dtype=torch.float16
         )
 
         self.txt2img_pipe = txt2img_pipe.to(self.device)
@@ -55,6 +59,7 @@ class StableDiffusionRunnable(bentoml.Runnable):
         height = data.get('height', 512)
         width = data.get('width', 512)
         num_inference_steps = data.get('steps', 50)
+        print(prompt, guidance_scale, height, width, num_inference_steps)
         generator = torch.Generator(self.device)
         generator.manual_seed(data.get('seed'))
 
@@ -120,7 +125,7 @@ class StableDiffusionRunnable(bentoml.Runnable):
 
             images = self.inpaint_pipe(
                 prompt=prompt,
-                init_image=image,
+                image=image,
                 mask_image=mask,
                 strength=strength,
                 num_inference_steps=num_inference_steps,

@@ -10,6 +10,7 @@ python:
     - ftfy
     - pydantic
     - scipy
+    - accelerate
   extra_index_url:
     - "https://download.pytorch.org/whl/cu116"
 docker:

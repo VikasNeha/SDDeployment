@@ -8,11 +8,10 @@ spec:
       containers:
       - name: model-downloader
         image: nehavikas/model-downloader:1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command:
           - "python3"
           - "/app/download.py"
-          - "--model-id=CompVis/stable-diffusion-v1-4"
         env:
         - name: HF_HOME
           value: /mnt/models/
