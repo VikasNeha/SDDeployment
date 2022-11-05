@@ -42,14 +42,11 @@ class StableDiffusionRunnable(bentoml.Runnable):
             feature_extractor=txt2img_pipe.feature_extractor,
         ).to(self.device)
 
-        self.inpaint_pipe = StableDiffusionInpaintPipeline(
-            vae=self.txt2img_pipe.vae,
-            text_encoder=self.txt2img_pipe.text_encoder,
-            tokenizer=self.txt2img_pipe.tokenizer,
-            unet=self.txt2img_pipe.unet,
-            scheduler=self.txt2img_pipe.scheduler,
-            safety_checker=self.txt2img_pipe.safety_checker,
-            feature_extractor=self.txt2img_pipe.feature_extractor,
+        self.inpaint_pipe = StableDiffusionInpaintPipeline.from_pretrained(
+            'runwayml/stable-diffusion-inpainting',
+            use_auth_token=hf_auth_token,
+            revision="fp16",
+            torch_dtype=torch.float16
         ).to(self.device)
 
     @bentoml.Runnable.method(batchable=False, batch_dim=0)
