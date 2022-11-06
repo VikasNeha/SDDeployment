@@ -15,12 +15,11 @@ spec:
             - key: gpu.nvidia.com/class
               operator: In
               values:
-              - A100_NVLINK
-              - A100_PCIE_40GB
-              - A100_PCIE_80GB
               - A40
               - RTX_A6000
-              - Tesla_V100_NVLINK
+              - A100_PCIE_40GB
+              - A100_PCIE_80GB
+              - A100_NVLINK
               - Quadro_RTX_5000
             - key: node.coreweave.cloud/cpu
               operator: In
