@@ -20,7 +20,7 @@ spec:
               - A100_PCIE_40GB
               - A100_PCIE_80GB
               - A100_NVLINK
-              - Quadro_RTX_5000
+              - RTX_A5000
             - key: node.coreweave.cloud/cpu
               operator: In
               values:
